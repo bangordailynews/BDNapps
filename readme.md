@@ -1,8 +1,15 @@
-# Web app generator [![Build Status](https://secure.travis-ci.org/yeoman/generator-webapp.svg?branch=master)](http://travis-ci.org/yeoman/generator-webapp)
+# The BDN Multimedia App generator
 
-[Yeoman](http://yeoman.io) generator that scaffolds out a front-end web app.
+A [Yeoman](http://yeoman.io) generator that scaffolds out a front-end multimedia app with all the BDN Maine defaults.
 
 ![](http://i.imgur.com/uKTT2Hj.png)
+
+This was forked from the [Yeoman Generator webapp template(https://travis-ci.org/yeoman/generator-webapp).
+
+## @todo
+
+All of the stuff below is the default stuff from generator-webapp. I need to rewrite this into some tasty usable documentation.
+
 
 ## Features
 
