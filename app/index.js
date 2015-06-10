@@ -1,7 +1,6 @@
 'use strict';
 
 // @todo 
-// Edit the index, main js file to make sure it all works
 // write a readme file about the chapters
 
 var join = require('path').join;
@@ -47,6 +46,10 @@ module.exports = yeoman.generators.Base.extend({
 
       this.includeLibSass = false;
       this.includeRubySass = true;
+
+      this.myDate = new Date();
+      this.projectYear = this.myDate.getFullYear();
+
       done();
 
     // var prompts = [{

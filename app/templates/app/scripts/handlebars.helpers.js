@@ -48,7 +48,7 @@ Handlebars.registerHelper('multimedia', function(options) {
                 '<video id="video-'+ this.fileID +'" controls preload width="auto" height="auto" data-setup="{}" class="video video-js vjs-default-skin" poster="images/'+this.poster+'">' +
                     '<source type="video/mp4" src="'+ this.filename +'" />' +
                 '</video>' +
-                '<p class="caption">'+this.caption+'</p>' +
+                '<p class="caption credit">'+this.credit+'</p>' +
               '</div>';
 
         case 'photo':

@@ -36,58 +36,6 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <!-- FB JS SDK -->
-    <div id="fb-root"></div>
-            <script>(function(d, s, id) {
-              var js, fjs = d.getElementsByTagName(s)[0];
-              if (d.getElementById(id)) return;
-              js = d.createElement(s); js.id = id;
-              js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=134939813194597";
-              fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));</script>
-
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand project-home" href="index.html"<%= appname %>></a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav chapters-nav">
-            <!-- Dynamically added in main.js -->
-          </ul>
-
-          <ul class="share-buttons nav navbar-nav pull-right" >
-
-            <!-- ####################### -->
-
-
-            <!-- Make sure that you update the URL and text 
-            in Facebook and Twitter before launch! -->
-
-
-            <!-- ####################### -->
-
-            <li>
-            <!-- Facebook button -->
-              <div class="fb-like" data-href="http://bangordailynews.com" data-width="n" data-height="" data-colorscheme="dark" data-layout="button_count" data-action="like" data-show-faces="false" data-send="false"></div>
-            </li>
-
-            <li>
-              <!-- Tweet that!  -->
-              <a href="https://twitter.com/share" class="twitter-share-button" data-url="" data-text="" data-via="bangordailynews" data-related="bangordailynews">Tweet</a>
-              <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-            </li>
-          </ul><!-- #share-buttons -->
-        </div><!--/.navbar-collapse -->
-      </div><!-- .container -->
-    </div><!-- .navbar -->
-
-
     <div id="page">
 
       <div id="intro">
@@ -132,7 +80,7 @@
               <a href="#card-Credits">
                   <img src="images/bdnmaine.png" alt="A BDN Maine Project" width="50">
               </a>
-              <p>Copyright 2014 BDN Maine</p>
+              <p>Copyright <%= projectYear %> BDN Maine</p>
           </div>
 
     </div><!-- /#page -->

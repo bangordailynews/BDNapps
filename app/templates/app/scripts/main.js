@@ -18,20 +18,20 @@ function sizeFunctions() {
     });
 }
 
-// Must run after templates are registered
 function setUpVideos(videos) {
 
+    // Videos is an empty object that we now fill.
     $('video').each(function(index, value) {
         videos[$(this).get(0).id] = _V_($(this).get(0).id);
     }); //video.each
 
     //Adds hover listener
-    $('video').hover(function() {
-        //Only play videos that haven't started yet.
-        if (this.currentTime === 0) {
-            this.play();
+    $('.video-media').bind('mouseenter', function() {
+        if($(this).find('video')[0].currentTime === 0) {
+            $(this).find('video')[0].play();
         }
     });
+
 
     // Google Analytics event Listeners
     for (var key in videos) {
@@ -133,37 +133,31 @@ $(function() {
 
     var videos = new Object;
 
-    // // Initialize Handlebars templates
+    // Initialize Handlebars templates
     var cards = Handlebars.compile($('#card-template').html());
 
-    // sizeFunctions();
+    sizeFunctions();
 
-    $.getJSON(
+       $.getJSON(
         'data/chapters.json',
         function(mainChapters) {
 
-            $.getJSON(
-                'data/chapters.json',
-                function(mainChapters) {
+            console.log(mainChapters);
 
-                    console.log(mainChapters);
+            // Find the chapter we want to display based on the URL.
+            var displayChapter = mainChapters[0]; //initialize at first chapter
+            displayChapter.count = 0;
 
-                    // Find the chapter we want to display based on the URL.
-                    var displayChapter = mainChapters[0]; //initialize at first chapter
-                    displayChapter.count = 0;
-
-                    $.each(mainChapters, function(index, value){
-                        if( location.href.indexOf( value.name ) > 0 ) {
-                            displayChapter = value;
-                            displayChapter.count = index;
-                        }
-                    });//each mainChapters 
-
+            $.each(mainChapters, function(index, value){
+                if( location.href.indexOf( value.name ) > 0 ) {
+                    displayChapter = value;
+                    displayChapter.count = index;
+                }
+            });//each mainChapters 
 
             $.each(mainChapters, function(chapterNumber, chapterMeta) {
-
                  var chapterMachineName = chapterMeta.name.replace(/ /g, "-");
-
+                 chapterMachineName = chapterMachineName.toLowerCase();
                 //In the GoodLife, we only loaded the chapter we wanted to display based on the URL.
                 $.getJSON(
 
@@ -179,52 +173,57 @@ $(function() {
 
                         }); //each chapter.chapters                    
 
-                          if (Modernizr.touch) {
+                        if (Modernizr.touch) {
                             $("img.lazy").lazyload({
-                                    threshold: 1000,
-                                    effect: "fadeIn",
-                                    failure_limit: 100,
-                                    load: function() {
-                                        if(!!(cardID = $(this).offsetParent().attr('id'))) {
-                                            // Add Google Analytics listener
-                                            ga('send', {
-                                              'hitType': 'event',          // Required.
-                                              'eventCategory': '<%= appname %>',   // Required.
-                                              'eventAction': 'Image Load',      // Required.
-                                              'eventLabel': displayChapter.name + '-' + cardID,
-                                              'eventValue': 1
-                                            });    
-                                        }
-                                    }
-                            });
-                         } else {
-                            $('img.lazy').lazyload({
-                                effect: 'fadeIn',
+                                threshold: 1000,
+                                effect: "fadeIn",
+                                failure_limit: 100,
                                 load: function() {
                                     if(!!(cardID = $(this).offsetParent().attr('id'))) {
-                                        // Add Google Analytics listener
-                                        ga('send', {
-                                          'hitType': 'event',          // Required.
-                                          'eventCategory': '<%= appname %>',   // Required.
-                                          'eventAction': 'Image Load',      // Required.
-                                          'eventLabel': displayChapter.name + '-' + cardID,
-                                          'eventValue': 1
+                                    // Add Google Analytics listener
+                                    ga('send', {
+                                        'hitType': 'event',          // Required.
+                                        'eventCategory': '<%= appname %>',   // Required.
+                                        'eventAction': 'Image Load',      // Required.
+                                        'eventLabel': displayChapter.name + '-' + cardID,
+                                        'eventValue': 1
                                         });    
                                     }
                                 }
                             });
-                         }
+                        } else {
+                            $('img.lazy').lazyload({
+                                effect: 'fadeIn',
+                                load: function() {
+                                    if(!!(cardID = $(this).offsetParent().attr('id'))) {
+                                    // Add Google Analytics listener
+                                    ga('send', {
+                                        'hitType': 'event',          // Required.
+                                        'eventCategory': '<%= appname %>',   // Required.
+                                        'eventAction': 'Image Load',      // Required.
+                                        'eventLabel': displayChapter.name + '-' + cardID,
+                                        'eventValue': 1
+                                    });    
+                                }
+                                }
+                            });
+                        } //if Modernizr.touch
 
                         setUpVideos(videos);
-                        // setUpAmbientVideos(ambientVideos);
-                        sizeFunctions();
 
-                        $('#logo a').on('click', function() {
-                            window.location('#card-Credits');
+                        $.each($('a'), function() {
+                            $(this).attr('target', '_blank');
+                        });
+
+                        // Add the ad tag
+                        $('<p class="text"><div id="bdnads-top-620x115"></div></p>').insertAfter($('#card-3 p.text:last-child').first());
+                        googletag.cmd.push(function() {
+                            googletag.display("bdnads-top-620x115");
                         });
 
                     } //success chapter data
                 ); //getJSON chapter
+
             }); //each mainChapters
         } //success chapters
     ); //getJSON mainChapters
