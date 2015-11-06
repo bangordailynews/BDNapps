@@ -211,15 +211,39 @@ $(function() {
 
                         setUpVideos(videos);
 
+
                         $.each($('a'), function() {
                             $(this).attr('target', '_blank');
                         });
 
-                        // Add the ad tag
-                        $('<p class="text"><div id="bdnads-top-620x115"></div></p>').insertAfter($('#card-3 p.text:last-child').first());
-                        googletag.cmd.push(function() {
-                            googletag.display("bdnads-top-620x115");
+                        $('#card-3').prepend('<div class="byline">By '+ displayChapter.byline +'</div>')
+
+
+
+                        shareButtons = '<div class="addthis_toolbox addthis_default_style addthis_32x32_style"><a class="addthis_button_email">E-mail</a><a class="addthis_button_facebook">Share</a><a class="addthis_button_twitter">Tweet</a></div>';
+                        $('.byline').append(shareButtons);
+                        $('div.cards:last-of-type p.text:first-of-type').prepend('<div class="byline">' + shareButtons + '</div>');
+                        addthis.init();
+
+                        $('#intro').css({
+                            'background':'no-repeat center center url("images/' + displayChapter.poster + '")',
+                            'background-size':'cover'
                         });
+
+                        // Add the ad tags
+                        $('<div class="rich-media size-medium ad orientation-right"><div id="bdnads-top-300x600"></div></div>').insertAfter($('#card-3 p.text:nth-last-of-type(6)').first());
+                        googletag.cmd.push(function() {
+                            googletag.display("bdnads-top-300x600");
+                        });
+
+                        for( i = 1; i < 5; i++ ) {
+                            $('<div class="rich-media size-medium ad orientation-left"><div id="bdnads-bottom-300x250-'+i+'"></div></div>').insertAfter($('#card-'+ eval(3 + i) +' p.text:nth-last-of-type(4)').first());
+                            googletag.cmd.push(function() {
+                              googletag.display('bdnads-bottom-300x250-'+ i);
+                            });
+                        }
+
+                        $('.ad').prepend('<h6><span>Story continues after </span>Paid Advertisement</h6>');
 
                     } //success chapter data
                 ); //getJSON chapter

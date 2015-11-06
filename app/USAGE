@@ -5,7 +5,7 @@ Options:
     Bootstrap: Include Bootstrap for Sass
 
 Example:
-    yo bdn [--coffee]
+    yo bdn 
 
     This will create:
         Gruntfile.js: Configuration for the task runner.

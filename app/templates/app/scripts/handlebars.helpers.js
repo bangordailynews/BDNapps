@@ -67,6 +67,11 @@ Handlebars.registerHelper('multimedia', function(options) {
                   '<p class="caption">'+ this.caption + '</p>' +
               '</div>';
 
+        case 'pullquote':
+            return '<div class="rich-media pullquote size-' + this.size + ' orientation-' + this.orientation + '">' +
+                    '<p class="caption">'+ this.caption + '</p>' +
+              '</div>';
+
         default:
             return;
     }
