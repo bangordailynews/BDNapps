@@ -6,7 +6,8 @@ This was forked from the [Yeoman Generator webapp template](https://travis-ci.or
 
 ## Dependencies
 - If you don't have [npm](http://nodejs.org) already, `brew install node`
-- Install Yo and its required tools: `npm install -g yo bower grunt-cli gulp`
+- Install Yo and its required tools: `npm install -g yo bower grunt-cli gulp generator-mocha`
+- You need Ruby and SASS installed too. Ruby comes preinstalled on macs. `sudo gem install sass`
 
 
 ## Getting Started
