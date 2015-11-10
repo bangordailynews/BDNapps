@@ -34,23 +34,23 @@ module.exports = yeoman.generators.Base.extend({
 
     // welcome message
     if (!this.options['skip-welcome-message']) {
-      this.log(require('yosay')());
+      this.log(require('yosay')('Let the multimedia journalism begin.'));
       this.log(chalk.magenta(
         'Here are all the things you need to build your BDN app. :) '
       ));
     }
 
-      this.includeSass = true;
-      this.includeBootstrap = true;
-      this.includeModernizr = true;
+    this.includeSass = true;
+    this.includeBootstrap = true;
+    this.includeModernizr = true;
 
-      this.includeLibSass = false;
-      this.includeRubySass = true;
+    this.includeLibSass = false;
+    this.includeRubySass = true;
 
-      this.myDate = new Date();
-      this.projectYear = this.myDate.getFullYear();
+    this.myDate = new Date();
+    this.projectYear = this.myDate.getFullYear();
 
-      done();
+    done();
 
     // var prompts = [{
     //   type: 'checkbox',
@@ -212,7 +212,7 @@ module.exports = yeoman.generators.Base.extend({
         options: {
           'skip-message': this.options['skip-install-message'],
           'skip-install': this.options['skip-install'],
-          'coffee': this.options.coffee
+          // 'coffee': this.options.coffee
         }
       });
 
