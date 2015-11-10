@@ -11,7 +11,7 @@ This was forked from the [Yeoman Generator webapp template](https://travis-ci.or
 
 ## Getting Started
 
-This is a local npm module. See this guide about creating your own [Yeoman Generators](http://yeoman.io/authoring/index.html) if your stuck.
+This is a local npm module. See this guide about creating your own [Yeoman Generators](http://yeoman.io/authoring/index.html) if you're stuck.
 
 - From the root of this project, run `npm link`
     -Since you're developing the generator locally, it's not yet available as a global npm module. A global module may be created and symlinked to a local one, using npm.  
