@@ -30,6 +30,71 @@
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
+
+       <script type="text/javascript">
+        var mappingHorizontal = null;
+
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+        (function() {
+            var gads = document.createElement("script");
+            gads.async = true;
+            gads.type = "text/javascript";
+            var useSSL = "https:" == document.location.protocol;
+            gads.src = (useSSL ? "https:" : "http:") + "//www.googletagservices.com/tag/js/gpt.js";
+            var node = document.getElementsByTagName("script")[0];
+            node.parentNode.insertBefore(gads, node);
+        })();
+
+        googletag.cmd.push(function() {
+
+          // mappingHorizontal = googletag.sizeMapping().addSize([1024, 300],[[620,115]]).addSize([0, 0],[[320,50]]).build();
+
+            var pid_value = "";
+            googletag.defineSlot('/1015782/bangordailynews', [
+                    [300,600]
+                ], "bdnads-top-300x600")
+                // .defineSizeMapping(mappingHorizontal)
+                .addService(googletag.pubads())
+                .setTargeting("pos", "top");
+
+           googletag.defineSlot('/1015782/bangordailynews', [
+                    [300,250]
+                ], "bdnads-bottom-300x250-1")
+                // .defineSizeMapping(mappingHorizontal)
+                .addService(googletag.pubads())
+                .setTargeting("pos", "bottom");
+
+            googletag.defineSlot('/1015782/bangordailynews', [
+                    [300,250]
+                ], "bdnads-bottom-300x250-2")
+                // .defineSizeMapping(mappingHorizontal)
+                .addService(googletag.pubads())
+                .setTargeting("pos", "bottom");
+            
+           googletag.defineSlot('/1015782/bangordailynews', [
+                    [300,250]
+                ], "bdnads-bottom-300x250-3")
+                // .defineSizeMapping(mappingHorizontal)
+                .addService(googletag.pubads())
+                .setTargeting("pos", "bottom");
+
+            googletag.defineSlot('/1015782/bangordailynews', [
+                    [300,250]
+                ], "bdnads-bottom-300x250-4")
+                // .defineSizeMapping(mappingHorizontal)
+                .addService(googletag.pubads())
+                .setTargeting("pos", "bottom");
+            
+            googletag.pubads().setTargeting('author', '');
+            googletag.pubads().setTargeting("pid", pid_value);
+            googletag.pubads().setTargeting("kw", ['']);
+            googletag.pubads().enableSingleRequest();
+            googletag.pubads().collapseEmptyDivs();
+            googletag.enableServices();
+        });
+    </script>
+
   </head>
   <body>
     <!--[if lt IE 10]>
@@ -89,12 +154,13 @@
 
     <!-- AddThis Smart Layers BEGIN -->
     <!-- Go to http://www.addthis.com/get/smart-layers to customize -->
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51c20b68617564b1"></script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#async=1"></script>
     <script type="text/javascript">
         var addthis_config = {
             data_ga_tracker:'UA-5329647-1',
-            data_track_addressbar:true
-        }; 
+            data_track_addressbar:true,
+            pubid:'ra-51c20b68617564b1'
+        };
         var addthis_share = {
             templates: {
                 twitter: '',

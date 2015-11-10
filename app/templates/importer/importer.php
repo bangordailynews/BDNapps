@@ -45,6 +45,7 @@ function create_json_file( $doc_url, $file_name ) {
 
 	foreach( $paragraphs as $paragraph ) {
 		$elementValue = $doc->saveXml( $paragraph );
+		$elementValue = trim($elementValue); //don't keep spaces
 
 		if( !empty($elementValue) ) {
 			/*
@@ -70,12 +71,13 @@ function create_json_file( $doc_url, $file_name ) {
 
 				$clean_string = str_replace("“", "\"", $paragraph->nodeValue);
 				$clean_string = str_replace("”", "\"", 	$clean_string);
+				$clean_string = trim($clean_string);
 
 				$rich_media = json_decode($clean_string);
 				if( is_null($rich_media) ) 
 					die( 'There is a parse error with your rich media: ' . var_dump( $clean_string ));
 
-				if( is_null($rich_media->filename) || is_null($rich_media->filetype) )
+				if( is_null($rich_media->filetype) )
 					die( 'Your rich media is missing attributes. ' . var_dump($clean_string) );
 
 				// Check if the filename is an int. If so, pull the asset from Merlin.
@@ -87,7 +89,7 @@ function create_json_file( $doc_url, $file_name ) {
 
 				//Provides some basic validation.
 				$output['chapters'][$heading]['content'][] = array( 
-					'filename' => $rich_media->filename,
+					'filename' => isset($rich_media->filename) ? $rich_media->filename : '',
 					'filetype' => $rich_media->filetype,
 					'size' => preg_match('/^(big|medium|small)$/', $rich_media->size) ? $rich_media->size : 'big',
 					'orientation' => preg_match('/^(left|right|full|background)$/', $rich_media->orientation) ? $rich_media->orientation : 'full',
@@ -128,7 +130,7 @@ function dpr( $value ) {
 }
 
 function import_photo(&$filename) {
-	if(!file_exists('app/images/'.$filename.'.jpg')) {
+	if(!file_exists(realpath(dirname(__FILE__)).'/../app/images/'.$filename.'.jpg')) {
 		bdn_input_merlin_photo($filename); //see merlin.php
 		$filename = $filename . ".jpg";
 		echo "Merlin ID {$filename} requested. \n";

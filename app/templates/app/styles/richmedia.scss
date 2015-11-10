@@ -1,7 +1,7 @@
 $light-background: #E1E7F1;
 $dark-background: #C1BEB9;
 $blue: #0E0E0E;
-$beige: #BAACA0;
+$beige: #E1E7F1;
 $dark: #0C0B0C;
 $display-font-stack: 'BebasNeueRegular', sans-serif;
 $font-stack: 'ChaparralPro-Light', georgia, serif;
@@ -146,20 +146,6 @@ h1, h2, h3, h4, h5, h6 {
 	overflow: auto;
 }
 
-#intro h1 {
-	color: rgba( 255,255,255,1 );
-	font-size: 800%;
-	line-height: 83%;
-	padding: 0;
-	margin: 5% 10% -1.5%;
-	width: 80%;
-	text-shadow: 2px 1px rgba( 0,0,0,.8 );
-}
-
-h2 {
-	text-align: center;
-}
-
 .call-to-action a {
 	display: inline-block;
 	margin: 0 auto;
@@ -277,7 +263,7 @@ p {
 	margin: 3em auto 1.618em;
 	font-weight: bold;
 	text-align: center;
-	color: $beige;
+	color: $dark-background;
 	padding: 0 1em;
 }
 
@@ -368,10 +354,6 @@ p.text {
 	font-size: 300%;
 }
 
-.size-small {
-	width: 20%;
-}
-
 .photo.size-small .caption {
 	font-size: .618em;
 }
@@ -460,59 +442,78 @@ a.navbar-brand {
     line-height: 1px;
 }
 
+.size-medium {
+	max-width: 500px;
+}
+
+.pullquote .caption {
+  background-color: rgb(225, 231, 241);
+  padding: 2%;
+  font-weight: 700;
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 100%;
+}
+
+.cards h2 {
+	text-align: left;
+  max-width: 620px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 400%;
+}
+
+.ad div {
+  text-align: center;
+  margin: 0 auto;
+}
+  
+.ad h6 {
+  text-align: center;
+  font-size: 120%;
+  color: #999;
+}
+
+.ad h6 span {display: none;}
+
+.pullquote.orientation-full {text-align: center;}
+.pullquote.orientation-left {text-align: right;}
+.pullquote.size-medium p.caption {padding: 10%;}
+.pullquote.size-big {font-size: 120%;}
+
+
+.addthis_toolbox a {
+  float: none !important;
+  display: inline-block !important;
+  line-height: 34px;
+  margin: .618em !important;
+  padding-right: 5px !important; 
+  color: white;
+  /*font-weight: normal;*/
+  font-size: 16px;
+  font-style: normal;
+}
+
+a.addthis_button_email {
+  background: #738A8D;
+}
+
+a.addthis_button_facebook {
+  background: #305891;
+}
+
+a.addthis_button_twitter {
+  background: #2CA8D2; 
+}
+
 
 @media (min-width: 1200px) {
 	.container {
 		max-width: 1200px;
 		margin: 0 auto;
 	}
-}
-
-@media (max-width: 650px) {
-
-	.size-small {
-		float: none;
-		width: 80%;
-		margin: 0 auto;
-	}
-
-	.photo.size-small .caption {
-		font-size: 100%;
-	}
-}
-
-@media (max-width: 600px) {
-	p.text {
-		margin: 1.618em .618em;
-	}
 
 }
-
-@media (max-width: 460px) {
-	#intro .subtitle {
-		font-size: 150%; 
-	}
-
-	#intro .inner {
-		margin-top: 15%;
-	}
-}
-
-@media (max-width: 400px) {
-	#intro h1.title {
-		font-size: 500%;
-	}
-
-	html, body {
-		font-size: 20px;
-	}
-}
-
-
-@media ( max-height: 600px ) {
-    .scroll-cue {display: none}
-}
-
 
 @media ( min-width:992px ) {
 
@@ -540,9 +541,6 @@ a.navbar-brand {
 		font-size: 80%;
 		max-width: 100%;
 	}
-}
-
-@media ( max-width:992px ) {
 
 	.video-media.size-medium {
 		width: 50%;
@@ -555,7 +553,17 @@ a.navbar-brand {
 	}
 }
 
+
 @media ( max-width:650px ) {
+	.size-small {
+		float: none;
+		width: 80%;
+		margin: 0 auto;
+	}
+
+	.caption {
+		font-size: 80%;
+	}
 
 	#intro h1 {
 		font-size: 3em;
@@ -581,6 +589,51 @@ a.navbar-brand {
 		clear: none;
 	}
 
+	.rich-media.ad {
+    clear: both;
+    width: 100%;
+    float: none;
+    margin: 1.15384615em auto;
+    max-width: 100%;
+  }
+  
+  .ad h6 span {display: inline}
+
+  .cards h2 {
+    margin-left: 2%;
+    margin-right: 2%;
+    font-size: 300%;
+  }
+
+}
+
+@media (max-width: 600px) {
+	p.text {
+		margin: 1.618em .618em;
+	}
+    .scroll-cue {display: none}
+
+}
+
+
+@media (max-width: 460px) {
+	#intro .subtitle {
+		font-size: 150%; 
+	}
+
+	#intro .inner {
+		margin-top: 15%;
+	}
+}
+
+@media (max-width: 400px) {
+	#intro h1.title {
+		font-size: 500%;
+	}
+
+	html, body {
+		font-size: 20px;
+	}
 }
 
 @media ( max-width:450px ) { 
