@@ -83,7 +83,7 @@ module.exports = function (grunt) {
       options: {
         port: 9050,
         open: true,
-        livereload: 35729,
+        livereload: 1337,
         // Change this to localhost to go back to webapp default
         hostname: '0.0.0.0'
       },
@@ -448,6 +448,7 @@ module.exports = function (grunt) {
       resize: {
         options: {
           width: 800,
+          height: '',
           overwrite: true
         },
         src: '<%%= config.dist %>/images/{,*/}*.{jpeg,jpg}',
@@ -527,7 +528,7 @@ module.exports = function (grunt) {
     'autoprefixer',
     'concat',
     'cssmin',
-    'uglify',
+    // 'uglify',
     'copy:dist',<% if (includeModernizr) { %>
     'modernizr',<% } %>
     'rev',
