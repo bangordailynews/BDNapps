@@ -117,18 +117,30 @@ module.exports = yeoman.generators.Base.extend({
     var bower = {
       name: this._.slugify(this.appname),
       private: true,
-      dependencies: {}
+      dependencies: {
+        "bootstrap-sass-official": "~3.2.0",
+        "modernizr": "~2.8.3",
+        "handlebars": "~1.3.0",
+        "bootstrap3-dialog": "*",
+        "jquery.lazyload": "~1.9.3",
+        "bigvideo.js": "1.0.9",
+        "video.js": "4.12.15",
+        "ba-dotimeout": "*"
+      },
+      overrides: {
+        "bootstrap-sass": {
+          "main": [
+              "assets/stylesheets/_bootstrap.scss",
+              "assets/fonts/bootstrap/*",
+              "assets/javascripts/bootstrap.js"
+          ]
+        }
+      },
+      devDependencies: {
+        "chai": "~3.4.1",
+        "mocha": "~2.3.3"
+      }
     };
-
-    // add other bower dependencies here
-    bower.dependencies["bootstrap-sass-official"] = "~3.2.0";
-    bower.dependencies["modernizr"] = "~2.8.2";
-    bower.dependencies["handlebars"] = "~1.3.0";
-    bower.dependencies["bootstrap3-dialog"] = "*";
-    bower.dependencies["jquery.lazyload"] = "~1.9.3";
-    bower.dependencies["bigvideo.js"] = "~1.0.9";
-    bower.dependencies["ba-dotimeout"] = "*";
-
 
     this.copy('bowerrc', '.bowerrc');
     this.write('bower.json', JSON.stringify(bower, null, 2));
