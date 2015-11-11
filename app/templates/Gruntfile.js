@@ -83,7 +83,7 @@ module.exports = function (grunt) {
       options: {
         port: 9050,
         open: true,
-        livereload: 35729,
+        livereload: 35489,
         // Change this to localhost to go back to webapp default
         hostname: '0.0.0.0'
       },
@@ -382,7 +382,7 @@ module.exports = function (grunt) {
         }, {
           src: 'node_modules/apache-server-configs/dist/.htaccess',
           dest: '<%%= config.dist %>/.htaccess'
-        }<% if (includeBootstrap) { %>, {
+        }, {
           expand: true,
           dot: true,
           cwd: '<% if (includeSass) {
@@ -396,7 +396,7 @@ module.exports = function (grunt) {
               %>fonts/*<%
             } %>',
           dest: '<%%= config.dist %>'
-        }<% } %>]
+        }]
       },
       styles: {
         expand: true,
@@ -405,24 +405,24 @@ module.exports = function (grunt) {
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
       }
-    },<% if (includeModernizr) { %>
+    },
 
     // Generates a custom Modernizr build that includes only the tests you
     // reference in your app
     modernizr: {
-      dist: {
-        devFile: 'bower_components/modernizr/modernizr.js',
-        outputFile: '<%%= config.dist %>/scripts/vendor/modernizr.js',
-        files: {
-          src: [
-            '<%%= config.dist %>/scripts/{,*/}*.js',
-            '<%%= config.dist %>/styles/{,*/}*.css',
-            '!<%%= config.dist %>/scripts/vendor/*'
-          ]
-        },
-        uglify: true
-      }
-    },<% } %>
+        dist: {
+          devFile: 'bower_components/modernizr/modernizr.js',
+          dest: '<%= config.dist %>/scripts/vendor/modernizr.js',
+          files: {
+            src: [
+              '<%= config.dist %>/scripts/{,*/}*.js',
+              '<%= config.dist %>/styles/{,*/}*.css',
+              '!<%= config.dist %>/scripts/vendor/*'
+            ]
+          },
+          uglify: true
+        }
+      },
 
     // Run some tasks in parallel to speed up build process
     concurrent: {
@@ -448,6 +448,7 @@ module.exports = function (grunt) {
       resize: {
         options: {
           width: 800,
+          height: '',
           overwrite: true
         },
         src: '<%%= config.dist %>/images/{,*/}*.{jpeg,jpg}',
@@ -528,8 +529,8 @@ module.exports = function (grunt) {
     'concat',
     'cssmin',
     'uglify',
-    'copy:dist',<% if (includeModernizr) { %>
-    'modernizr',<% } %>
+    'copy:dist',
+    'modernizr',
     'rev',
     'usemin',
     'htmlmin',

@@ -2,7 +2,8 @@
   "name": "generator-bdn",
   "version": "0.5.1",
   "description": "Scaffold out a front-end web app for a Bangor Daily News project. Includes php importer from Google Docs. Derived from the Yeoman Webapp generator.",
-  "license": "BSD",
+  "license": "UNLICENSED",
+  "private" : "true",
   "repository": {
     "type": "git",
     "url": "https://github.com/bangordailynews/BDNapps"
@@ -15,21 +16,8 @@
     "node": ">=0.10.0",
     "npm": ">=1.2.10"
   },
-  "scripts": {
-    "test": "mocha --reporter spec"
-  },
   "files": [
     "app"
-  ],
-  "keywords": [
-    "yeoman-generator",
-    "web",
-    "app",
-    "front-end",
-    "h5bp",
-    "modernizr",
-    "jquery",
-    "grunt"
   ],
   "dependencies": {
     "chalk": "^0.5.1",
