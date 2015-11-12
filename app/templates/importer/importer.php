@@ -1,5 +1,7 @@
 <?php
 header('Content-type: text/html; Charset=utf-8');
+libxml_use_internal_errors(true); //hide the DomDocument errors.
+
 include('merlin.php'); //Imports the image files, if merlin ids used.
 
 // Load the chapter config file
