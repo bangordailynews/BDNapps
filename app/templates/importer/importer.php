@@ -32,23 +32,43 @@ function create_json_file( $doc_url, $file_name ) {
 	// if you have not escaped entities use
 	$file = mb_convert_encoding($string, 'html-entities', 'utf-8'); 
 
-	//Set up DOMDocument
+	// Replaces the italics and the bolds in the string.
+	preg_match_all( '/.c(?P<digit>\d+){[^}]*(?>font-style:bold)[^{]*}/im', $file, $matches['strong'] );
+	preg_match_all('/.c(?P<digit>\d+){[^}]*(?>font-style:italic)[^{]*}/im', $file, $matches['em']);
+
+	foreach( $matches as $type => $match ) {
+		if(!empty( $match['digit'] )) {
+			foreach( $match['digit'] as $class ) {
+				$file = preg_replace( '#<span class="[^>]*c'.$class.'[^>]*">(?<text>[^<]+)<\/span>#', '<'.$type.'>$1</'.$type.'>', $file );
+			}
+		}
+	}
+
+	//Set up DOMDocument so we can parse the XML
 	$doc = new DOMDocument('1.0', 'UTF-8');
 	$doc->substituteEntities = TRUE;
 	$doc->loadHTML( $file );
+	$xpath = new DOMXPath( $doc );
 
-	$paragraphs = $doc->getElementsByTagName( 'p' );
-
+	
+	$elements = $xpath->query('//p | //ul | //ol');
+	
 	//Initialize variables
 	$output = array(
 		'chapters' => array(),
 	);
 	$heading = 0; //Counter. 
 
-	foreach( $paragraphs as $paragraph ) {
-		$elementValue = $doc->saveXml( $paragraph );
-		$elementValue = trim($elementValue); //don't keep spaces
+	foreach( $elements as $element ) {
 
+		/**
+		 * Check to see what type of element it is — paragraph or list.
+		 * If it is a list item, then you'll need to get the list items and then put it all in a paragraph.
+		 * If it is a paragraph, lets look to see if it has multimedia attached to it.
+		 */
+
+		$elementValue = trim($element->textContent);
+			
 		if( !empty($elementValue) ) {
 			/*
 				Get the attribute
@@ -58,20 +78,20 @@ function create_json_file( $doc_url, $file_name ) {
 				Put in JSON array.
 			*/
 
-			if( stripos($paragraph->getAttribute( 'class' ), 'subtitle') ) {
+			if( stripos($element->getAttribute( 'class' ), 'subtitle') ) {
 				$heading++;
 				$output['chapters'][$heading] = array(
-					'heading' => $paragraph->nodeValue,
+					'heading' => $element->nodeValue,
 					'content' => array(  ),
 					//@todo none of these are set
 					'preview image' => '',
 					'short title' => '',
 				);
-			} elseif( stripos($paragraph->nodeValue, '{') !== FALSE) {
+			} elseif( stripos($element->nodeValue, '{') !== FALSE) {
 				//This is a rich media asset
 				//A heading should be set when it triggered a earlier in this loop.
 
-				$clean_string = str_replace("“", "\"", $paragraph->nodeValue);
+				$clean_string = str_replace("“", "\"", $element->nodeValue);
 				$clean_string = str_replace("”", "\"", 	$clean_string);
 				$clean_string = trim($clean_string);
 
@@ -100,35 +120,74 @@ function create_json_file( $doc_url, $file_name ) {
 					'poster' => isset($rich_media->poster) ? $rich_media->poster : '', //Added with PWM project
 				);
 			} else {
-				$value = trim(strip_tags($doc->saveXml( $paragraph ), '<a>'));
+				// This is a paragraph or a list item.
+				
+				if ( preg_match('/\Sl/i', $element->tagName) ) {
 
-				if( !empty( $value ) ) {
-					$output['chapters'][$heading]['content'][] = array( 
+					$listItems = array();
+					// var_dump( $doc->saveXml( $element ) );
+
+					foreach( $element->childNodes as $item ) {
+						// var_dump($doc->saveXml( $item ) );
+						
+						// $item = strip_tags($item, '<a><li><span>');
+
+						// Find the node that needs to be replaced wtih em or strong tags
+						// $replace = array();
+						// foreach($item->childNodes as $childNodes) {
+						// 	foreach($childNodes->childNodes as $childNode) {
+						// 		foreach($childNode->attributes as $attr ) {
+								
+
+						// 		if( array_search( $attr, array_column($displayClasses, 'class') ) ) {
+						// 			// $replace[] = $childNode;
+						// 			echo "match times! \n";
+						// 		}
+						// 	}
+						// 	}							
+							
+						// }
+						// var_dump( $replace );
+						// var_dump( $item );
+
+						$listItems[] = trim(strip_tags($item->textContent, '<a><em><strong>'));
+					}
+
+					// Replace the classes that are italic and bold with tags.
+					
+					// die();
+
+
+					$output['chapters'][$heading]['content'][] = array(
 						'filename' => NULL,
 						'filetype' => 'text',
 						'size' => null,
 						'orientation' => null,
-						'caption' => $value, 
-						// 'caption' => $doc->saveXml( $paragraph ), 
+						'caption' => '<'.$element->tagName.'><li>'. implode('</li><li>', $listItems) . '</li></'.$element->tagName.'>', 
 					);
+
+				} else {
+				
+					$value = trim(strip_tags($doc->saveXml( $element ), '<a><em><strong>'));
+
+					if( !empty( $value ) ) {
+						$output['chapters'][$heading]['content'][] = array( 
+							'filename' => NULL,
+							'filetype' => 'text',
+							'size' => null,
+							'orientation' => null,
+							'caption' => $value, 
+						);
+					}
 				}
-				// $output['chapters'][$heading]['content'][] = strip_tags($paragraph->nodeValue, 'a');
 			}			
 		} // if the string isn't empty
+
 	}
 
 	//Now write this to a file.
 	file_put_contents(realpath(dirname(__FILE__)).'/../app/data/'.$file_name.'.json', json_encode($output)) or die ( 'Could not open file for writing.' );
 	echo date( "Y-m-d H:i:s" ) . " successful import. \r\n";
-}
-
-/*
-	Saves my sanity and makes shit easy to debug.
-*/
-function dpr( $value ) {
-	echo "<pre>";
-	var_dump($value);
-	echo "</pre>";
 }
 
 function import_photo(&$filename) {
