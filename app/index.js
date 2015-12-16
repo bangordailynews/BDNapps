@@ -118,14 +118,15 @@ module.exports = yeoman.generators.Base.extend({
       name: this._.slugify(this.appname),
       private: true,
       dependencies: {
-        "bootstrap-sass-official": "~3.2.0",
+        "bootstrap-sass-official": "*",
         "modernizr": "~2.8.3",
         "handlebars": "~1.3.0",
         "bootstrap3-dialog": "*",
         "jquery.lazyload": "~1.9.3",
-        "bigvideo.js": "1.0.9",
-        "video.js": "4.12.15",
-        "ba-dotimeout": "*"
+        "bigvideo.js": "~1.0.9",
+        "video.js": "^5.0.0",
+        "ba-dotimeout": "*",
+        "videojs-youtube": "~2.0.3"
       },
       overrides: {
         "bootstrap-sass": {
