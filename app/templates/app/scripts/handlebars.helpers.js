@@ -31,7 +31,8 @@ Handlebars.registerHelper('multimedia', function(options) {
         this.fileID = '';
     } //if this.filename
 
-    if (this.credit || this.caption && this.filetype !== 'text') {
+    if (this.caption || this.credit && this.filetype !== 'text') {
+        this.caption = this.caption ? this.caption : ''; //don't print null, please!
         this.captionFormatted = '<p class="caption">' + this.caption + ' <span class="credit">' + this.credit + '</span></p>';
     } else {
         this.captionFormatted = '';
@@ -46,12 +47,13 @@ Handlebars.registerHelper('multimedia', function(options) {
 
         case 'video':
             return '<div class="rich-media video-media size-'+ this.size +' orientation-'+ this.orientation +'">' +
-                '<video id="video-'+ this.fileID +'" controls preload width="auto" height="auto" data-setup="{}" class="video video-js vjs-default-skin" poster="images/'+this.poster+'">' +
-                    '<source type="video/mp4" src="'+ this.filename +'" />' +
-                '</video>' +
-                '<p class="caption credit">'+this.credit+'</p>' +
-              '</div>';
-
+                        '<div class="embed-responsive embed-responsive-16by9">' +
+                          '<video id="video-'+ this.fileID +'" controls autoWidth="true" autoHeight="true" class="embed-responsive-item video video-js vjs-default-skin" poster="images/'+this.poster+'">' +
+                              '<source type="video/mp4" src="'+ this.filename +'" />' +
+                          '</video>' +
+                      '</div>' + 
+                      this.captionFormatted +
+                '</div>';
 
       case 'youtube' : 
         if( Modernizr.touch ) {
