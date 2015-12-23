@@ -15,7 +15,7 @@ function bdn_input_merlin_photo( $merlin_id = false ) {
 	//So it goes a little something like this
 	//First, retrieve the cookie
 	$ch = curl_init( 'http://ban.merlinone.net/mweb/wmsql.wm.request?LOGIN' );
-	$fields = array( 'f_username' => 'wordpress', 'f_pin' => 'pr0gress' );
+	$fields = array( 'f_username' => MERLIN_USERNAME, 'f_pin' => MERLIN_PASSWORD );
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false );
 	curl_setopt($ch,CURLOPT_POST,true);
