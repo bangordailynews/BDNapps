@@ -76,8 +76,9 @@ function create_json_file( $doc_url, $file_name ) {
 				If it's wrapped in curly braces, convert to php array to describe art.
 				If it doesn't, wrap it in a p tag.
 				Put in JSON array.
+			 
+				 @todo it would be so great if you could have a link in a caption. ¯\_(ツ)_/¯
 			*/
-
 			if( stripos($element->getAttribute( 'class' ), 'subtitle') ) {
 				$heading++;
 				$output['chapters'][$heading] = array(
@@ -123,50 +124,35 @@ function create_json_file( $doc_url, $file_name ) {
 				// This is a paragraph or a list item.
 				
 				if ( preg_match('/\Sl/i', $element->tagName) ) {
+					// This is a <ul> or <ol> node
 
+					/**
+					 * Saves all the child items of this node in an array.
+					 * Then save all of these child items as a unit.
+					 */
 					$listItems = array();
-					// var_dump( $doc->saveXml( $element ) );
 
 					foreach( $element->childNodes as $item ) {
-						// var_dump($doc->saveXml( $item ) );
-						
-						// $item = strip_tags($item, '<a><li><span>');
 
-						// Find the node that needs to be replaced wtih em or strong tags
-						// $replace = array();
-						// foreach($item->childNodes as $childNodes) {
-						// 	foreach($childNodes->childNodes as $childNode) {
-						// 		foreach($childNode->attributes as $attr ) {
-								
+						$v = trim(strip_tags($doc->saveXml( $item ), '<a><em><strong>'));
 
-						// 		if( array_search( $attr, array_column($displayClasses, 'class') ) ) {
-						// 			// $replace[] = $childNode;
-						// 			echo "match times! \n";
-						// 		}
-						// 	}
-						// 	}							
-							
-						// }
-						// var_dump( $replace );
-						// var_dump( $item );
-
-						$listItems[] = trim(strip_tags($item->textContent, '<a><em><strong>'));
+						if( !empty($v) ) {
+							$listItems[] = $v;
+						}
 					}
-
-					// Replace the classes that are italic and bold with tags.
-					
-					// die();
-
 
 					$output['chapters'][$heading]['content'][] = array(
 						'filename' => NULL,
-						'filetype' => 'text',
+						'filetype' => 'list',
 						'size' => null,
 						'orientation' => null,
 						'caption' => '<'.$element->tagName.'><li>'. implode('</li><li>', $listItems) . '</li></'.$element->tagName.'>', 
 					);
 
+					unset( $listItems );
+
 				} else {
+					// This is a paragraph.
 				
 					$value = trim(strip_tags($doc->saveXml( $element ), '<a><em><strong>'));
 

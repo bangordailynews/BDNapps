@@ -19,5 +19,17 @@
   "smarttabs": true,
   "jquery": true,
   "multistr": true,
-  "lastsemic": false
+  "lastsemic": false,
+  "camelcase" : false,
+  "unused" : false,
+  "globals" : {
+    "$" : false,
+    "Handlebars" : false,
+    "BootstrapDialog" : false,
+    "Modernizr" : false,
+    "videojs" : false,
+    "ga" : false,
+    "googletag" : false,
+    "addthis" : false
+  }
 }
